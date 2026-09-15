@@ -25,28 +25,69 @@ html, body {
   height: 100vh;
 }
 
-/* Mode pseudo-plein-écran : repli CSS quand element.requestFullscreen() échoue ou n'est pas autorisé par l'iframe
-   hôte (Grist ne pose pas systématiquement allow="fullscreen" sur l'iframe des widgets custom — voir js/main.js et
-   README.md, section "Mode présentation"). */
-#app.spls-pseudo-fullscreen {
+/* Mode présentation — quel que soit l'état réel du Fullscreen API (vrai plein écran natif ou repli pseudo-plein-
+   écran CSS, voir js/main.js), cette classe masque la barre d'outils et le panneau de diapositives : seule la
+   diapositive courante reste visible, sur fond noir. */
+#app.spls-presenting #toolbar,
+#app.spls-presenting #slides-panel {
+  display: none;
+}
+#app.spls-presenting #stage-wrapper {
+  background: #000;
+  padding: 0;
+}
+#app.spls-presenting #slide-canvas {
+  box-shadow: none;
+}
+/* Repli pseudo-plein-écran CSS (utilisé quand element.requestFullscreen() échoue, ex. iframe hôte Grist sans
+   allow="fullscreen" — voir js/main.js, enterPresentation()) : occupe toute la fenêtre par-dessus le reste. */
+#app.spls-presenting:not(:fullscreen) {
   position: fixed;
   inset: 0;
   z-index: 2147483647;
-  background: #000;
 }
 
 #toolbar {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
   padding: 0.4rem 0.75rem;
   background: #fff;
   border-bottom: 1px solid var(--spls-border);
   flex: none;
+  flex-wrap: wrap;
 }
 
 #app-title {
   font-weight: 600;
+}
+
+#tool-group, #presentation-group {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding-left: 0.5rem;
+  border-left: 1px solid var(--spls-border);
+}
+
+#toolbar button {
+  cursor: pointer;
+  border: 1px solid var(--spls-border);
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+#toolbar button:hover { background: var(--spls-bg); }
+#toolbar button:disabled { opacity: 0.4; cursor: default; }
+
+#load-select {
+  border: 1px solid var(--spls-border);
+  border-radius: 6px;
+  padding: 0.3rem 0.4rem;
+  font-size: 0.85rem;
+  max-width: 12rem;
 }
 
 .status {
@@ -60,16 +101,89 @@ html, body {
 
 #btn-fullscreen {
   margin-left: auto;
-  cursor: pointer;
-  border: 1px solid var(--spls-border);
-  background: #fff;
-  border-radius: 6px;
-  padding: 0.3rem 0.6rem;
-  font-size: 0.85rem;
 }
-#btn-fullscreen:hover { background: var(--spls-bg); }
 
 #stage-wrapper {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  min-height: 0;
+}
+
+#slides-panel {
+  flex: none;
+  width: 168px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--spls-border);
+  background: #fff;
+  overflow: hidden;
+}
+
+#slides-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.slide-thumb {
+  border: 2px solid transparent;
+  border-radius: 6px;
+  padding: 0.25rem;
+  cursor: pointer;
+  background: var(--spls-bg);
+}
+.slide-thumb.active {
+  border-color: var(--spls-accent);
+}
+.slide-thumb img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid var(--spls-border);
+  border-radius: 4px;
+}
+.slide-thumb-label {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.slide-thumb-actions {
+  display: flex;
+  gap: 0.2rem;
+  margin-top: 0.2rem;
+}
+.slide-thumb-actions button {
+  flex: 1;
+  font-size: 0.7rem;
+  padding: 0.1rem;
+  border: 1px solid var(--spls-border);
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+.slide-thumb-actions button:disabled { opacity: 0.35; cursor: default; }
+
+#btn-add-slide {
+  flex: none;
+  margin: 0.5rem;
+  padding: 0.4rem;
+  border: 1px dashed var(--spls-border);
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+#btn-add-slide:hover { background: var(--spls-bg); }
+
+#canvas-area {
   flex: 1;
   display: flex;
   align-items: center;

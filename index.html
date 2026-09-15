@@ -4,17 +4,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SlidesPlus</title>
-  <link rel="stylesheet" href="css/style.css?v=0.1.0">
+  <link rel="stylesheet" href="css/style.css?v=0.2.0">
 </head>
 <body>
   <div id="app">
     <header id="toolbar">
       <span id="app-title">SlidesPlus</span>
+
+      <div id="tool-group" role="group" aria-label="Outils d'insertion">
+        <button id="tool-text" type="button" title="Texte">🔤</button>
+        <button id="tool-rect" type="button" title="Rectangle">▭</button>
+        <button id="tool-ellipse" type="button" title="Ellipse">⬭</button>
+        <button id="tool-line" type="button" title="Ligne">╱</button>
+        <button id="tool-image" type="button" title="Image">🖼️</button>
+        <input id="image-input" type="file" accept="image/*" hidden>
+        <button id="tool-delete" type="button" title="Supprimer la sélection">🗑️</button>
+      </div>
+
+      <div id="presentation-group">
+        <button id="btn-save" type="button">Enregistrer</button>
+        <select id="load-select" title="Charger une présentation enregistrée">
+          <option value="">Charger…</option>
+        </select>
+      </div>
+
       <span id="grist-status" class="status status-pending">Connexion à Grist…</span>
       <button id="btn-fullscreen" type="button" title="Mode présentation">⛶ Plein écran</button>
     </header>
+
     <main id="stage-wrapper">
-      <canvas id="slide-canvas"></canvas>
+      <aside id="slides-panel">
+        <div id="slides-list"></div>
+        <button id="btn-add-slide" type="button">+ Diapositive</button>
+      </aside>
+      <div id="canvas-area">
+        <canvas id="slide-canvas"></canvas>
+      </div>
     </main>
   </div>
 
@@ -33,6 +58,12 @@
        CDN tiers : same-origin, pas de SRI nécessaire pour la même raison que ci-dessus. -->
   <script src="vendor/fabric.min.js?v=7.4.0"></script>
 
-  <script src="js/main.js?v=0.1.0"></script>
+  <!-- Code applicatif SlidesPlus — ordre de chargement : les modules indépendants d'abord (aucun ne dépend d'un
+       autre chargé après lui), main.js en dernier (les instancie et les relie). -->
+  <script src="js/slides-model.js?v=0.2.0"></script>
+  <script src="js/canvas-tools.js?v=0.2.0"></script>
+  <script src="js/slides-panel.js?v=0.2.0"></script>
+  <script src="js/presentations-store.js?v=0.2.0"></script>
+  <script src="js/main.js?v=0.2.0"></script>
 </body>
 </html>
