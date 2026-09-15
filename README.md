@@ -5,9 +5,9 @@ type diaporama (texte, images, formes), avec mode présentation en plein écran 
 **publipostage** : une diapositive (ou une présentation) générée à partir des données d'une ou plusieurs tables
 Grist.
 
-**État actuel : fondation, pas encore un éditeur utilisable.** Ce premier commit établit l'architecture (connexion
-Grist, structure des dépendances, mode présentation) sur laquelle les prochaines itérations construisent l'éditeur
-réel — voir [`ROADMAP.md`](ROADMAP.md) pour le détail de ce qui reste à faire.
+**État actuel : éditeur mono-utilisateur basique fonctionnel** (insertion texte/formes/image, multi-diapositives,
+enregistrement/chargement dans Grist, mode présentation) — **pas encore d'export pptx/PDF ni de publipostage**,
+voir [`ROADMAP.md`](ROADMAP.md) pour le détail de ce qui reste à faire.
 
 Widget sœur : [publipostageGrist](https://github.com/lombre33/publipostagegrist) (publipostage de documents texte
 riches). SlidesPlus en réutilise le moteur de résolution de variables cross-table (voir

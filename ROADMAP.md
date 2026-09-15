@@ -1,22 +1,23 @@
 # Feuille de route
 
-État au premier commit : une fondation (connexion Grist + canevas Fabric.js vide + mode présentation), **pas encore
-un éditeur de diapositives utilisable**. Rien ci-dessous n'est implémenté sauf mention contraire.
-
 Ordre inspiré de la priorisation retenue par le widget sœur `publipostageGrist` pour son propre backlog (contenu
 piloté par les données avant les outils visuels avant les options d'export avancées) et de l'analyse d'architecture
-qui a précédé ce commit.
+qui a précédé le premier commit.
 
 ## Phase 1 — Éditeur
 
-- Barre d'outils d'insertion : zone de texte, image (upload + pièce jointe Grist), formes simples (rectangle,
-  ellipse, ligne).
-- Sélection multiple, alignement/distribution, guides d'alignement (magnétisme).
-- Gestion multi-diapositives (ajout/suppression/réordonnancement), miniatures.
-- Sauvegarde du modèle de présentation (JSON des diapositives) dans une table Grist interne dédiée
-  (`SlidesPlus_Presentations`), sur le même patron que `Publipostage_Modeles` côté widget sœur — voir
-  `AUDIT_CODE.md` de publipostageGrist pour le détail du patron (création/migration idempotente, un seul
-  "par défaut" à la fois).
+- [x] Barre d'outils d'insertion : zone de texte, formes simples (rectangle, ellipse, ligne), image (upload depuis
+  le disque) — `js/canvas-tools.js`. Import depuis les pièces jointes Grist reporté en Phase 3 (publipostage).
+- [x] Gestion multi-diapositives (ajout/suppression/réordonnancement), miniatures en direct — `js/slides-panel.js`.
+- [x] Sauvegarde du modèle de présentation (JSON des diapositives) dans une table Grist interne dédiée
+  (`SlidesPlus_Presentations`), sur le même patron que `Publipostage_Modeles` côté widget sœur —
+  `js/presentations-store.js`. Pas encore de notion de "présentation par défaut" ni de suppression depuis l'UI
+  (seul un nouvel enregistrement/écrasement est possible pour l'instant).
+- [x] Mode présentation fonctionnel (pas juste le plein écran) : masque la barre d'outils/le panneau, verrouille la
+  sélection sur le canevas, navigation clavier (flèches, Échap) — `js/main.js`.
+- [ ] Sélection multiple avancée, alignement/distribution, guides d'alignement (magnétisme) — Fabric.js gère déjà la
+  sélection multiple nativement (Maj+clic, cadre de sélection), il manque l'alignement/magnétisme assisté.
+- [ ] Undo/redo (reporté en Phase 4).
 
 ## Phase 2 — Export
 
