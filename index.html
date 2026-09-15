@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SlidesPlus</title>
+  <link rel="stylesheet" href="css/style.css?v=0.1.0">
+</head>
+<body>
+  <div id="app">
+    <header id="toolbar">
+      <span id="app-title">SlidesPlus</span>
+      <span id="grist-status" class="status status-pending">Connexion à Grist…</span>
+      <button id="btn-fullscreen" type="button" title="Mode présentation">⛶ Plein écran</button>
+    </header>
+    <main id="stage-wrapper">
+      <canvas id="slide-canvas"></canvas>
+    </main>
+  </div>
+
+  <!-- API officielle du widget Grist (SDK, non versionnée par Grist lui-même) -->
+  <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
+
+  <!-- Module partagé (voir shared/README.md) : same-origin, pas de SRI nécessaire (une compromission serait déjà
+       celle de ce dépôt). Ordre de chargement : html-sanitize et variable-format n'ont pas de dépendance entre eux ;
+       grist-api-core doit précéder variable-resolver (qui prend une instance GristAPI en paramètre). -->
+  <script src="shared/html-sanitize.js?v=0.1.0"></script>
+  <script src="shared/variable-format.js?v=0.1.0"></script>
+  <script src="shared/grist-api-core.js?v=0.1.0"></script>
+  <script src="shared/variable-resolver.js?v=0.1.0"></script>
+
+  <!-- Fabric.js 7.4.0, vendorisé depuis le paquet npm officiel (voir DEPENDENCIES.md) plutôt que chargé depuis un
+       CDN tiers : same-origin, pas de SRI nécessaire pour la même raison que ci-dessus. -->
+  <script src="vendor/fabric.min.js?v=7.4.0"></script>
+
+  <script src="js/main.js?v=0.1.0"></script>
+</body>
+</html>

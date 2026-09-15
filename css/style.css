@@ -1,0 +1,84 @@
+/* SlidesPlus — feuille de style minimale. Pas de framework CSS (cohérent avec l'absence de build step et la
+   minimisation des dépendances) : voir DEPENDENCIES.md. */
+
+:root {
+  color-scheme: light;
+  --spls-border: #d8dce1;
+  --spls-bg: #f5f6f8;
+  --spls-text: #1f2328;
+  --spls-accent: #2563eb;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--spls-text);
+  background: var(--spls-bg);
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Mode pseudo-plein-écran : repli CSS quand element.requestFullscreen() échoue ou n'est pas autorisé par l'iframe
+   hôte (Grist ne pose pas systématiquement allow="fullscreen" sur l'iframe des widgets custom — voir js/main.js et
+   README.md, section "Mode présentation"). */
+#app.spls-pseudo-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  background: #000;
+}
+
+#toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0.75rem;
+  background: #fff;
+  border-bottom: 1px solid var(--spls-border);
+  flex: none;
+}
+
+#app-title {
+  font-weight: 600;
+}
+
+.status {
+  font-size: 0.85rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+}
+.status-pending { color: #92400e; background: #fef3c7; }
+.status-ok { color: #065f46; background: #d1fae5; }
+.status-error { color: #991b1b; background: #fee2e2; }
+
+#btn-fullscreen {
+  margin-left: auto;
+  cursor: pointer;
+  border: 1px solid var(--spls-border);
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.85rem;
+}
+#btn-fullscreen:hover { background: var(--spls-bg); }
+
+#stage-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 1rem;
+}
+
+#slide-canvas {
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
